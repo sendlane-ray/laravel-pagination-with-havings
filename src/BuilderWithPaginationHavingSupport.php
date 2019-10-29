@@ -28,7 +28,9 @@ class BuilderWithPaginationHavingSupport extends Builder
                 }
             }
 
-            $countQuery = DB::table(DB::raw('('.$query->toSql().') as x'))->mergeBindings($query);
+            $countQuery = $this->connection
+                ->table(DB::raw('('.$query->toSql().') as x'))
+                ->mergeBindings($query);
 
             // Using a aggregate here won't work when
             // groups are present because the
